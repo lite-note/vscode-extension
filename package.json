@@ -2,8 +2,19 @@
   "name": "lite-note",
   "displayName": "Lite Note",
   "description": "Improve Lite Note experience with commands",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "license": "MIT",
+  "publisher": "LiteNote",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lite-note/vscode-extension"
+  },
+  "keywords": [
+    "Lite Note",
+    "Note",
+    "Note taking",
+    "Markdown"
+  ],
   "engines": {
     "vscode": "^1.46.0"
   },
