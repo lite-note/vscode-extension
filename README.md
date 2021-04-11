@@ -15,6 +15,10 @@ Users appreciate release notes as you update your extension.
 
 Add listener on changing files to update link path.
 
+### 1.1.0 & 1.2.0
+
+Nothing. Mistakes happen..
+
 ### 1.0.0
 
 Initial release of Lite Note Extension.
