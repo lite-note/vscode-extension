@@ -106,8 +106,8 @@ export function activate(context: vscode.ExtensionContext) {
         )
 
         if (fleetingNote) {
-          await vscode.workspace.openTextDocument(fleetingNote.path)
-          vscode.window.showInformationMessage("Fleeting note already exist.")
+          await vscode.workspace.openTextDocument(fleetingNote)
+          vscode.window.showInformationMessage("Fleeting note already exists.")
           return
         }
 
