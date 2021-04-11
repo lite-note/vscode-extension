@@ -91,7 +91,7 @@ export function activate(context: vscode.ExtensionContext) {
           "**inbox/**.md"
         )
 
-        let inboxFolderPath = firstInboxFile?.fsPath
+        let inboxFolderPath = firstInboxFile?.fsPath ?? ""
 
         vscode.workspace.workspaceFolders?.forEach((workspace) => {
           inboxFolderPath = inboxFolderPath.replace(workspace.uri.fsPath, "")
