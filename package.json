@@ -9,6 +9,7 @@
     "type": "git",
     "url": "https://github.com/lite-note/vscode-extension"
   },
+  "icon": "asset/logo.png",
   "keywords": [
     "Lite Note",
     "Note",

@@ -11,6 +11,10 @@ Lite Note extensions to improve your taking note's experience
 
 Users appreciate release notes as you update your extension.
 
+### 1.3.1
+
+Add icon
+
 ### 1.3.0
 
 Add listener on changing files to update link path.
