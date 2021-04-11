@@ -1,6 +1,8 @@
 # Lite Note README
 
-Lite Note extensions to improve your taking note's experience
+[Lite Note](https://litenote.space) is an app which main goal is to provide a simple yet effective way to display your notes.
+
+Lite Note extensions to improve your taking note's experience.
 
 ## Features
 
