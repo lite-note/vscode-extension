@@ -1,9 +1,25 @@
-# Change Log
+# Release Notes
 
-All notable changes to the "lite-note" extension will be documented in this file.
+## 1.3.3
 
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
+- Ignore `node modules` folder
 
-## [Unreleased]
+## 1.3.2
 
-- Initial release
+- Create `_inbox` folder if it doesn't exist when creating the fleeting note.
+
+## 1.3.1
+
+- Add icon
+
+## 1.3.0
+
+- Add listener on changing files to update link path.
+
+## 1.1.0 & 1.2.0
+
+Nothing. Mistakes happen..
+
+## 1.0.0
+
+- Initial release of Lite Note Extension.
