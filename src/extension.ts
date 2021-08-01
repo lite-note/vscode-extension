@@ -8,7 +8,10 @@ const updateLinkPath = async (
     newUri: vscode.Uri
   }[]
 ) => {
-  const notes = await vscode.workspace.findFiles("**/*.md")
+  const notes = await vscode.workspace.findFiles(
+    "**/*.md",
+    "**​/node_modules/**"
+  )
 
   for (const note of notes) {
     const noteContentBuffer = await vscode.workspace.fs.readFile(note)
