@@ -10,7 +10,7 @@ const updateLinkPath = async (
 ) => {
   const notes = await vscode.workspace.findFiles(
     "**/*.md",
-    "**​/node_modules/**"
+    "**/node_modules/**/*"
   )
 
   for (const note of notes) {
