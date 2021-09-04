@@ -27,6 +27,7 @@ const updateLinkPath = async (files: MovedFiles) => {
 
 const updateLinkPathInMovedFiles = async (files: MovedFiles) => {
   for (const file of files) {
+    const oldFilePath = resolve(file.oldUri.path, "../")
     const filePath = resolve(file.newUri.path, "../")
     const fileContentBuffer = await vscode.workspace.fs.readFile(file.newUri)
     const initialFileContent = fileContentBuffer.toString()
@@ -46,8 +47,16 @@ const updateLinkPathInMovedFiles = async (files: MovedFiles) => {
       const oldPath = pathResult?.[1]
 
       if (oldPath) {
-        const absoluteOldPath = resolve(file.oldUri.path, oldPath)
-        const newPath = relative(filePath, absoluteOldPath)
+        const absolutePath = resolve(oldFilePath, oldPath)
+        const newPath = relative(filePath, absolutePath)
+
+        try {
+          // Does file exist
+          await vscode.workspace.fs.stat(vscode.Uri.file(absolutePath))
+        } catch (error) {
+          continue
+        }
+
         const parsedNewRelativePath = parseRelativePath(newPath)
 
         fileContent = fileContent.replace(
