@@ -2,6 +2,11 @@ import * as vscode from "vscode"
 import { resolve, relative } from "path"
 const markdownLinkExtractor = require("markdown-link-extractor")
 
+type MovedFiles = ReadonlyArray<{
+  oldUri: vscode.Uri
+  newUri: vscode.Uri
+}>
+
 const parseRelativePath = (newRelativePath: string) => {
   return newRelativePath.startsWith("../")
     ? newRelativePath
@@ -10,18 +15,17 @@ const parseRelativePath = (newRelativePath: string) => {
     : `./${newRelativePath}`
 }
 
-const updateLinkPath = async (
-  files: readonly {
-    oldUri: vscode.Uri
-    newUri: vscode.Uri
-  }[]
-) => {
+const updateLinkPath = async (files: MovedFiles) => {
   const notes = await vscode.workspace.findFiles(
     "**/*.md",
     "**/node_modules/**/*"
   )
 
-  // Changing paths in renamed files
+  await updateLinkPathInMovedFiles(files)
+  await updateLinkPathInNotes(notes, files)
+}
+
+const updateLinkPathInMovedFiles = async (files: MovedFiles) => {
   for (const file of files) {
     const filePath = resolve(file.newUri.path, "../")
     const fileContentBuffer = await vscode.workspace.fs.readFile(file.newUri)
@@ -60,8 +64,12 @@ const updateLinkPath = async (
       )
     }
   }
+}
 
-  // Changing path in notes
+const updateLinkPathInNotes = async (
+  notes: vscode.Uri[],
+  files: MovedFiles
+) => {
   for (const note of notes) {
     const noteContentBuffer = await vscode.workspace.fs.readFile(note)
 
