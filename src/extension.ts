@@ -2,6 +2,14 @@ import * as vscode from "vscode"
 import { resolve, relative } from "path"
 const markdownLinkExtractor = require("markdown-link-extractor")
 
+const parseRelativePath = (newRelativePath: string) => {
+  return newRelativePath.startsWith("../")
+    ? newRelativePath
+    : newRelativePath.startsWith("./")
+    ? newRelativePath
+    : `./${newRelativePath}`
+}
+
 const updateLinkPath = async (
   files: readonly {
     oldUri: vscode.Uri
@@ -13,6 +21,47 @@ const updateLinkPath = async (
     "**/node_modules/**/*"
   )
 
+  // Changing paths in renamed files
+  for (const file of files) {
+    const filePath = resolve(file.newUri.path, "../")
+    const fileContentBuffer = await vscode.workspace.fs.readFile(file.newUri)
+    const initialFileContent = fileContentBuffer.toString()
+    let fileContent = initialFileContent
+
+    // get all paths
+    const linkRegex = /\[(.*?)\]\(.*?\)/gm
+    const pathRegex = /\(([^)]+)\)/
+    let lastMatch: RegExpExecArray | null = null
+
+    while (
+      linkRegex.global &&
+      (lastMatch = linkRegex.exec(initialFileContent))
+    ) {
+      const [link] = lastMatch
+      const pathResult = link.match(pathRegex)
+      const oldPath = pathResult?.[1]
+
+      if (oldPath) {
+        const absoluteOldPath = resolve(file.oldUri.path, oldPath)
+        const newPath = relative(filePath, absoluteOldPath)
+        const parsedNewRelativePath = parseRelativePath(newPath)
+
+        fileContent = fileContent.replace(
+          RegExp(`\(${oldPath}\)`),
+          parsedNewRelativePath
+        )
+      }
+    }
+
+    if (initialFileContent !== fileContent) {
+      vscode.workspace.fs.writeFile(
+        file.newUri,
+        new Uint8Array(Buffer.from(fileContent))
+      )
+    }
+  }
+
+  // Changing path in notes
   for (const note of notes) {
     const noteContentBuffer = await vscode.workspace.fs.readFile(note)
 
@@ -20,19 +69,11 @@ const updateLinkPath = async (
     let noteContent = initialNoteContent
 
     for (const fileRenamed of files) {
-      if (!fileRenamed.newUri.fsPath.endsWith("md")) {
-        continue
-      }
-
       const noteFolderPath = resolve(note.path, "../")
 
       const newRelativePath = relative(noteFolderPath, fileRenamed.newUri.path)
 
-      const parsedNewRelativePath = newRelativePath.startsWith("../")
-        ? newRelativePath
-        : newRelativePath.startsWith("./")
-        ? newRelativePath
-        : `./${newRelativePath}`
+      const parsedNewRelativePath = parseRelativePath(newRelativePath)
 
       const links: string[] = markdownLinkExtractor(noteContent)
 
@@ -65,11 +106,10 @@ export function activate(context: vscode.ExtensionContext) {
   // The commandId parameter must match the command field in package.json
   const disposeRenameFiles = vscode.workspace.onDidRenameFiles(
     async (fileRenameEvent) => {
-      if (
-        !fileRenameEvent.files.some((file) =>
-          file.newUri.fsPath.endsWith(".md")
-        )
-      ) {
+      const markdownFiles = fileRenameEvent.files.filter((file) =>
+        file.newUri.fsPath.endsWith(".md")
+      )
+      if (!markdownFiles.length) {
         return
       }
 
@@ -79,7 +119,7 @@ export function activate(context: vscode.ExtensionContext) {
           cancellable: false,
           title: "Updating link path...",
         },
-        () => updateLinkPath(fileRenameEvent.files)
+        () => updateLinkPath(markdownFiles)
       )
     }
   )
