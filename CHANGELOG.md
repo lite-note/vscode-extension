@@ -1,5 +1,9 @@
 # Release Notes
 
+## 1.4.0
+
+- Update link paths in moved files
+
 ## 1.3.4
 
 - Ignore `node modules` folder
