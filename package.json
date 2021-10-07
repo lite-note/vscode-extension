@@ -41,7 +41,9 @@
     "watch": "tsc -watch -p ./",
     "pretest": "yarn run compile && yarn run lint",
     "lint": "eslint src --ext ts",
-    "test": "node ./dist/test/runTest.js"
+    "test": "node ./dist/test/runTest.js",
+    "minor": "vsce publish minor",
+    "patch": "vsce publish patch"
   },
   "devDependencies": {
     "@types/glob": "^7.1.3",
