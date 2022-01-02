@@ -187,6 +187,7 @@ export function activate(context: vscode.ExtensionContext) {
         )
 
         await vscode.workspace.applyEdit(worspaceEdit)
+        vscode.window.showTextDocument(filePath)
       } catch (error) {
         console.warn(error)
       }
