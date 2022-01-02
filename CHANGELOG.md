@@ -1,6 +1,6 @@
 # Release Notes
 
-## 1.12.0
+## 1.11.0
 
 - Focus in new fleeting note on creation
 
