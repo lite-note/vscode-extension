@@ -1,5 +1,9 @@
 # Release Notes
 
+## 2.0.0
+
+As VS Code will now automatically update paths on files and folders' moves, there is no need anymore to also do it in this extension.
+
 ## 1.11.0
 
 - Focus in new fleeting note on creation
