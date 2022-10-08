@@ -23,8 +23,7 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:lite-note.newFleetingNote",
-    "onStartupFinished"
+    "onCommand:lite-note.newFleetingNote"
   ],
   "main": "./dist/extension.js",
   "contributes": {
