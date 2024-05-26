@@ -39,7 +39,7 @@
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
     "pretest": "pnpm run compile && pnpm run lint",
-    "lint": "eslint src --ext ts",
+    "lint": "eslint ./src",
     "minor": "vsce publish minor",
     "patch": "vsce publish patch"
   },
