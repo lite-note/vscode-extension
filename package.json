@@ -16,14 +16,14 @@
     "Note taking",
     "Markdown"
   ],
+  "activationEvents": [
+    "onCommand:lite-note.newFleetingNote"
+  ],
   "engines": {
     "vscode": "^1.89.0"
   },
   "categories": [
     "Other"
-  ],
-  "activationEvents": [
-    "onCommand:lite-note.newFleetingNote"
   ],
   "main": "./dist/extension.js",
   "contributes": {
