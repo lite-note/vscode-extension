@@ -2,7 +2,7 @@
 
 ## Install globally
 
-`npm install -g @vscode/vsce` and launch `yarn publish`
+`npm install -g @vscode/vsce` and launch `vsce publish --no-yarn`
 
 ## What's in the folder
 
