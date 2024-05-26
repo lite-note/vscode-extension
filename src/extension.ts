@@ -1,17 +1,5 @@
 import * as vscode from "vscode"
-
-type MovedFiles = ReadonlyArray<{
-  oldUri: vscode.Uri
-  newUri: vscode.Uri
-}>
-
-const parseRelativePath = (newRelativePath: string) => {
-  return newRelativePath.startsWith("../")
-    ? newRelativePath
-    : newRelativePath.startsWith("./")
-    ? newRelativePath
-    : `./${newRelativePath}`
-}
+import { commands } from "vscode"
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -41,7 +29,7 @@ export function activate(context: vscode.ExtensionContext) {
         )
 
         if (fleetingNote) {
-          await vscode.workspace.openTextDocument(fleetingNote)
+          commands.executeCommand("vscode.open", fleetingNote)
           vscode.window.showInformationMessage("Fleeting note already exists.")
           return
         }
