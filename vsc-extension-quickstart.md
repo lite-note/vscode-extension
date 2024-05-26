@@ -1,5 +1,9 @@
 # Welcome to your VS Code Extension
 
+## Install globally
+
+`npm install -g @vscode/vsce` and launch `yarn publish`
+
 ## What's in the folder
 
 - This folder contains all of the files necessary for your extension.
