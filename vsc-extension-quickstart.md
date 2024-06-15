@@ -6,7 +6,7 @@
 
 ## Creating a PAT
 
-[Token for juliencbam](https://dev.azure.com/juliencbam/_usersSettings/tokens)
+[Token for juliencbam](https://dev.azure.com/juliencbam/_usersSettings/tokens), make sure your logged in with LiteNote account.
 
 ## Manage publishers
 
