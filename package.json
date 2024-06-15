@@ -16,9 +16,6 @@
     "Note taking",
     "Markdown"
   ],
-  "activationEvents": [
-    "onCommand:lite-note.newFleetingNote"
-  ],
   "engines": {
     "vscode": "^1.89.0"
   },
@@ -31,6 +28,10 @@
       {
         "command": "lite-note.newFleetingNote",
         "title": "Create a fleeting note"
+      },
+      {
+        "command": "lite-note.openOldestFleetingNote",
+        "title": "Open oldest fleeting note"
       }
     ]
   },

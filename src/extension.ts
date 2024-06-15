@@ -4,7 +4,7 @@ import { commands } from "vscode"
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
-  const commandDisposable = vscode.commands.registerCommand(
+  const newFleetingNote = vscode.commands.registerCommand(
     "lite-note.newFleetingNote",
     async () => {
       try {
@@ -57,7 +57,29 @@ export function activate(context: vscode.ExtensionContext) {
     }
   )
 
-  context.subscriptions.push(commandDisposable)
+  const openOldestFleetingNote = vscode.commands.registerCommand(
+    "lite-note.openOldestFleetingNote",
+    async () => {
+      try {
+        const inbox = await vscode.workspace.findFiles("**inbox/**.md")
+        inbox.sort((a, b) => {
+          return a.fsPath.localeCompare(b.fsPath)
+        })
+        const [firstInboxFile] = inbox
+
+        if (!firstInboxFile) {
+          vscode.window.showInformationMessage("No fleeting notes found.")
+          return
+        }
+
+        commands.executeCommand("vscode.open", firstInboxFile)
+      } catch (error) {
+        console.warn(error)
+      }
+    }
+  )
+
+  context.subscriptions.push(newFleetingNote, openOldestFleetingNote)
 }
 
 // this method is called when your extension is deactivated
