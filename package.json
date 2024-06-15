@@ -16,6 +16,10 @@
     "Note taking",
     "Markdown"
   ],
+  "activationEvents": [
+    "onCommand:lite-note.newFleetingNote",
+    "onCommand:lite-note.openOldestFleetingNote"
+  ],
   "engines": {
     "vscode": "^1.89.0"
   },
